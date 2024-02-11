@@ -1,0 +1,30 @@
+FROM node:18.19.0 as builder
+
+# set working directory add `/app/node_modules/.bin` to $PATH
+WORKDIR /app
+ENV PATH="/app/node_modules/.bin:$PATH"
+
+# enable PNPM
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+# install app dependencies
+COPY package.json .
+COPY pnpm-lock.yaml .
+RUN pnpm install
+
+# copy source code
+COPY . .
+
+RUN pnpm build
+
+FROM nginx:1.25.3-alpine
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

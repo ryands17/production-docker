@@ -12,10 +12,14 @@ RUN corepack enable
 # install app dependencies
 COPY package.json .
 COPY pnpm-lock.yaml .
-RUN pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+  pnpm config set package-import-method copy && \
+  pnpm install --frozen-lockfile --prefer-offline
 
 # copy source code
 COPY . .
+
+RUN pnpm lint && pnpm check
 
 RUN pnpm build
 

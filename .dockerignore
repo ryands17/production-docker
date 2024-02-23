@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# misc
+.git
+README.md
+docker
+docker-compose*

@@ -12,8 +12,7 @@ RUN corepack enable
 COPY package.json .
 COPY pnpm-lock.yaml .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-  pnpm config set package-import-method copy && \
-  pnpm install --frozen-lockfile --prefer-offline
+  pnpm install
 
 # set working directory add `/app/node_modules/.bin` to $PATH
 WORKDIR /app

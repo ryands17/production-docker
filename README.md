@@ -1,22 +1,16 @@
 # React + Vite + Docker
 
-This template provides a minimal setup to get React working in Vite using Docker and Docker compose for development
+This template provides a minimal setup to get React working in Vite using Docker and Docker compose for development and production
 
 ## Development workflow
 
-If pulled for the first time or the `package.json` has changed run
+To run the project in dev mode:
 
 ```
-docker compose build
+docker compose watch -d
 ```
 
-Then, run the following command to start the environment
-
-```
-docker compose up -d
-```
-
-To check the logs
+Docker compose automatically watches for changes to files and rebuilds the container if `package.json` changes
 
 ```
 docker compose logs -f web
@@ -24,9 +18,7 @@ docker compose logs -f web
 
 To install any NPM package
 
-```
-docker compose exec web pnpm i <package-name>
-```
+Add the package name and version to `package.json`. Docker will automatically install the package and make sure it's synced to the host
 
 To stop the container
 
@@ -36,7 +28,7 @@ docker compose down
 
 ## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+If you are developing a production application, it's recommended to update the configuration to enable type aware lint rules:
 
 - Configure the top-level `parserOptions` property like this:
 

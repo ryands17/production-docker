@@ -13,7 +13,7 @@ RUN corepack enable
 COPY package.json .
 COPY pnpm-lock.yaml .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-  pnpm install --frozen-lockfile
+  pnpm install
 
 # copy source code
 COPY . .
@@ -28,4 +28,4 @@ COPY Caddyfile /etc/caddy/Caddyfile
 
 COPY --from=builder /app/dist /usr/share/caddy
 
-EXPOSE 80
+EXPOSE 3000

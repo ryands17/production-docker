@@ -12,15 +12,12 @@ RUN corepack enable
 # install app dependencies
 COPY package.json .
 COPY pnpm-lock.yaml .
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-  pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 # copy source code
 COPY . .
 
-RUN pnpm lint && pnpm check
-
-RUN pnpm build
+RUN pnpm lint && pnpm check && pnpm build
 
 FROM caddy:2.7.6-alpine
 

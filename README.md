@@ -52,4 +52,4 @@ export default {
 
 - [x] Add replica deployment support for production
 - [x] Add healthcheck for service
-- [ ] Add automatic syncing of `pnpm-lock.yaml`
+- [x] Add automatic syncing of `pnpm-lock.yaml`
